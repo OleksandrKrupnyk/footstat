@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Handbook\ScaleTypeResource\Pages;
 
 use App\Filament\Resources\Handbook\ScaleTypeResource;
-use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditScaleType extends EditRecord
@@ -13,9 +12,20 @@ class EditScaleType extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            //Actions\DeleteAction::make(),
+            $this->getCancelFormAction(),
         ];
     }
+
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getSaveFormAction(),
+//            $this->getCancelFormAction(),
+//            Actions\DeleteAction::make()
+        ];
+    }
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');

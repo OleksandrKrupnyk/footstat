@@ -13,7 +13,17 @@ class EditScale extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            //Actions\DeleteAction::make(),
+            $this->getCancelFormAction(),
+        ];
+    }
+
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getSaveFormAction(),
+//            $this->getCancelFormAction(),
+            Actions\DeleteAction::make()
         ];
     }
 }

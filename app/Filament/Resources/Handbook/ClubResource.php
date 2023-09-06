@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Handbook;
 
 use App\Filament\Resources\Handbook\ClubResource\Pages;
-use App\Filament\Resources\Handbook\ClubResource\RelationManagers;
+use App\Filament\Resources\Handbook\ClubResource\RelationManagers\CriteriaRelationManager;
 use App\Filament\Resources\Handbook\ClubResource\Widgets\StatsOverview;
 use App\Models\Handbook\Club;
 use App\Models\Handbook\Country;
@@ -63,19 +63,25 @@ class ClubResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Назва клубу')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('country_code')
+                    ->label('Країна')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('owners')
+                    ->label('Власники')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('capitan')
+                    ->label('Капітан')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('manager')
+                    ->label('Менеджер')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('seo')
+                Tables\Columns\TextColumn::make('ceo')
+                    ->label('CEO')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
@@ -107,6 +113,7 @@ class ClubResource extends Resource
     {
         return [
             //
+            CriteriaRelationManager::class,
         ];
     }
 
@@ -124,5 +131,11 @@ class ClubResource extends Resource
         return [
             StatsOverview::class,
         ];
+    }
+
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::$model::query()->count();
     }
 }

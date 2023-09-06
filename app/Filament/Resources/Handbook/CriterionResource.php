@@ -28,14 +28,17 @@ class CriterionResource extends Resource
                 Forms\Components\Section::make('Параметри критерію')
                     ->schema([
                         Forms\Components\TextInput::make('title')
+                            ->label('Назва критерію')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\Select::make('scale_id')
                             ->options(Scale::query()->where('is_enable', 1)->pluck('title', 'id'))
+                            ->label('Шкала критерію')
+                            ->required()
                             ->native(false),
                         Forms\Components\Toggle::make('is_enable')
                             ->default(true)
-                            ->required(),
+                            ->label('Доступність?')
                     ])->columns(1)
             ]);
     }
@@ -45,11 +48,14 @@ class CriterionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Назва критерію')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('scale.title')
+                    ->label('Шкала критерію')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\ToggleColumn::make('is_enable')
+                    ->label('Доступність?')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -91,5 +97,10 @@ class CriterionResource extends Resource
             'create' => Pages\CreateCriterion::route('/create'),
             'edit' => Pages\EditCriterion::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::$model::query()->count();
     }
 }

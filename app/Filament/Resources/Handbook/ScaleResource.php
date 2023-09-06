@@ -153,4 +153,9 @@ class ScaleResource extends Resource
             'edit' => Pages\EditScale::route('/{record}/edit'),
         ];
     }
+    
+    public static function getNavigationBadge(): ?string
+    {
+        return static::$model::query()->count();
+    }
 }

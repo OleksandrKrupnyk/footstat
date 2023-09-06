@@ -10,6 +10,7 @@ php artisan make:model Handbook/Owner -m
 php artisan make:model Handbook/ScaleValue -m
 php artisan make:model Handbook/Criterion -m
 php artisan make:model Handbook/Club -m
+php artisan make:model Handbook/ClubCriterion -m
 ```
 
 ## Створення ресурсу
@@ -33,7 +34,7 @@ php artisan make:filament-resource Handbook/Scale --generate
 
 php artisan make:filament-resource Handbook/ScaleValue --generate
 php artisan make:filament-resource Handbook/Club --generate
-
+php artisan make:filament-resource Handbook/ClubCriterion --generate
 
 ## Створення зв'язків між ресурсами
 
@@ -47,3 +48,6 @@ php artisan make:filament-relation-manager CategoryResource posts title
 php artisan make:filament-relation-manager Handbook/ScaleResource values value
 
 php artisan make:filament-resource Handbook/Criterion --generate
+
+
+php artisan make:filament-relation-manager Handbook/ClubCriterion criteria  criterion_id
