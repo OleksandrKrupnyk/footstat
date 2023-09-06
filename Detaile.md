@@ -11,6 +11,7 @@ php artisan make:model Handbook/ScaleValue -m
 php artisan make:model Handbook/Criterion -m
 php artisan make:model Handbook/Club -m
 php artisan make:model Handbook/ClubCriterion -m
+php artisan make:model Stats/Mark -a
 ```
 
 ## Створення ресурсу
@@ -35,7 +36,7 @@ php artisan make:filament-resource Handbook/Scale --generate
 php artisan make:filament-resource Handbook/ScaleValue --generate
 php artisan make:filament-resource Handbook/Club --generate
 php artisan make:filament-resource Handbook/ClubCriterion --generate
-
+php artisan make:filament-resource Stats/Mark --generate
 ## Створення зв'язків між ресурсами
 
 ```bash
