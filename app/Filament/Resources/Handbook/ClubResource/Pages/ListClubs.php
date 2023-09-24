@@ -24,6 +24,6 @@ class ListClubs extends ListRecords
 
     protected function getFooterWidgets(): array
     {
-        return ClubResource::getWidgets();
+        return ClubResource::getBottomWidgets();
     }
 }

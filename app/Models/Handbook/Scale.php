@@ -20,6 +20,7 @@ class Scale extends Model
 {
     use HasFactory;
 
+    protected static $unguarded = true;
     /**
      * @return HasOne
      */

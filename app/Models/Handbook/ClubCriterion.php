@@ -11,10 +11,18 @@ class ClubCriterion extends Model
     use HasFactory;
 
 
-    public function criterion():HasOne
+    public function criterion(): HasOne
     {
         return $this->hasOne(Criterion::class,
             'id',
-        'criterion_id');
+            'criterion_id');
+    }
+
+
+    public function club(): HasOne
+    {
+        return $this->hasOne(Club::class,
+            'id',
+            'club_id');
     }
 }

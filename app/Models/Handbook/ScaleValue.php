@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ScaleValue extends Model
 {
     use HasFactory;
+
+    protected static $unguarded = true;
 }

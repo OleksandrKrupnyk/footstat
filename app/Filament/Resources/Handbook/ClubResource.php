@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Handbook;
 
 use App\Filament\Resources\Handbook\ClubResource\Pages;
 use App\Filament\Resources\Handbook\ClubResource\RelationManagers\CriteriaRelationManager;
+use App\Filament\Resources\Handbook\ClubResource\Widgets\BlogPostsChart;
 use App\Filament\Resources\Handbook\ClubResource\Widgets\StatsOverview;
 use App\Models\Handbook\Club;
 use App\Models\Handbook\Country;
@@ -130,6 +131,13 @@ class ClubResource extends Resource
     {
         return [
             StatsOverview::class,
+        ];
+    }
+
+    public static function getBottomWidgets(): array
+    {
+        return [
+            BlogPostsChart::class,
         ];
     }
 

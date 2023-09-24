@@ -29,7 +29,7 @@ class CriteriaRelationManager extends RelationManager
                                 ClubCriterion::query()
                                     ->select('criterion_id')
                                     ->where('club_id',$parentID))
-                            ->whereIsEnable(true)
+                            ->where('is_enable',true)
                             ->pluck('title','id')
                             ->all()
                     )->required()

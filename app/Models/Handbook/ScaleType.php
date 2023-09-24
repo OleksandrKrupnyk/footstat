@@ -17,4 +17,6 @@ use Illuminate\Database\Eloquent\Model;
 class ScaleType extends Model
 {
     use HasFactory;
+
+    protected static $unguarded = true;
 }

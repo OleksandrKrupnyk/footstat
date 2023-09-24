@@ -52,7 +52,8 @@ class CountryResource extends Resource
                 Tables\Columns\TextColumn::make('code')
                     ->label("Код")
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('title')->label("Назва країни")
+                Tables\Columns\TextColumn::make('title')
+                    ->label("Назва країни")
                     ->searchable(isIndividual: true)
             ])
             ->filters([

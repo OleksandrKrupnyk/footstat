@@ -61,8 +61,10 @@ class ScaleResource extends Resource
                         Forms\Components\TextInput::make('offset')
                             ->required()
                             ->numeric()
+                            ->disabled()
                             ->label('Зміщення відносно нуля')
-                            ->default(0),
+                            ->default(0)
+                            ->helperText('Не задіяно'),
                         Forms\Components\TextInput::make('step')
                             ->required()
                             ->numeric()
@@ -153,7 +155,7 @@ class ScaleResource extends Resource
             'edit' => Pages\EditScale::route('/{record}/edit'),
         ];
     }
-    
+
     public static function getNavigationBadge(): ?string
     {
         return static::$model::query()->count();

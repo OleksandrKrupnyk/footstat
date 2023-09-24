@@ -52,3 +52,10 @@ php artisan make:filament-resource Handbook/Criterion --generate
 
 
 php artisan make:filament-relation-manager Handbook/ClubCriterion criteria  criterion_id
+
+
+php artisan make:filament-widget BlogPostsChart --chart
+
+```bash
+php artisan db:seed
+```

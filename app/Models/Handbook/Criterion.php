@@ -18,6 +18,7 @@ class Criterion extends Model
 {
     use HasFactory;
 
+    protected static $unguarded = true;
 
     public function scale(): HasOne
     {
