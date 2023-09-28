@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LeagueController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserClubController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +21,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class,'index'] )
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class,'index'])
+        ->name('dashboard.index');
+
+    Route::get('/leagues', [LeagueController::class, 'index'])
+        ->name('leagues.index');
+
+    Route::get('/user-club', [UserClubController::class, 'index'])
+        ->name('userclub.index');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,4 +39,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

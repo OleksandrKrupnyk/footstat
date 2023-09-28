@@ -25,6 +25,11 @@ class UserClub extends Model
     use HasFactory;
 
 
+    public $fillable=[
+        'user_id',
+        'club_id'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id', 'user_id', 'users');
