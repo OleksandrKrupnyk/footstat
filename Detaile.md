@@ -59,3 +59,4 @@ php artisan make:filament-widget BlogPostsChart --chart
 ```bash
 php artisan db:seed
 ```
+php artisan make:filament-relation-manager Control/UserResource clubUser  club_id

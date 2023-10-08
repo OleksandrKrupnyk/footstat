@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Handbook\Club;
 use App\Models\Stats\Mark;
 use App\Models\Users\UserClub;
 use Filament\Models\Contracts\FilamentUser;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -69,16 +71,34 @@ class User extends Authenticatable implements FilamentUser
 
     public function userClub(): HasOne
     {
-        return $this->hasOne(UserClub::class, 'user_id', 'id');
+        return $this->hasOne(
+            UserClub::class,
+            'user_id',
+            'id'
+        );
     }
-
 
     public function marks(): HasMany
     {
         return  $this->hasMany(Mark::class,'user_id','id');
     }
 
-
+    /**
+     * Зв'язок з клубом
+     *
+     * @return HasOneThrough
+     */
+    public function club():HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Club::class,
+            UserClub::class,
+            'user_id',
+            'id',
+            'id',
+            'club_id',
+        );
+    }
 
     public function mCount()
     {

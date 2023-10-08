@@ -33,7 +33,18 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label("Ім'я")
                     ->placeholder("Ім'я")
-                    ->required()
+                    ->required(),
+//                Forms\Components\TextInput::make('userClub.club_id')
+//
+//                    ->label("Улюблений клуб")
+//                    ->placeholder("Улюблений клуб")
+//                    ->required(),
+//                Forms\Components\Select::make('userClub.club_id')
+//                    ->options(
+//                        Club::query()->orderBy('title')->pluck('title', 'id')->all()
+//                    )->label('Улюблений клуб')
+//                    ->native(false)
+//                    ->required()
             ])->columns(1);
     }
 
@@ -49,12 +60,12 @@ class UserResource extends Resource
                     ->label('Поштова скринька')
                     ->icon('heroicon-m-envelope')
                     ->searchable(isIndividual: true),
-                Tables\Columns\TextColumn::make('userClub.club.title')
+                Tables\Columns\TextColumn::make('club.title')
                     ->label('Улюблений клуб')
                     ->searchable(isIndividual: true),
-                 Tables\Columns\TextColumn::make('marks_count')
-                     ->label('Оцінок')
-                     ->searchable()
+                Tables\Columns\TextColumn::make('marks_count')
+                    ->label('Оцінок')
+                    ->searchable()
             ])
             ->filters([
                 //
@@ -72,7 +83,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ClubUserRelationManager::class
         ];
     }
 
