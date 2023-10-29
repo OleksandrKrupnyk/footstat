@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+/**
+ * Class ProfileController
+ *
+ * Контролер керування даними профайла користувача
+ * @package App\Http\Controllers
+ * @author Alex.Krupnik <krupnik_a@ukr.net>
+ * @copyright (c), Thread
+ */
 class ProfileController extends Controller
 {
 
@@ -41,17 +49,11 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
+        $request->validated();
         $user->fill($request->validated());
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
-        if(!$user->userClub) {
-            $user->userClub()->create(['user_id' => $user->id, 'club_id' => $request->club]);
-        }
-//else{
-//            //$user->userClub()->update(['user_id' => $user->id, 'club_id' => $request->club]);
-//        }
-
         $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');

@@ -57,28 +57,6 @@
                 </div>
             @endif
         </div>
-
-        @if (!$user->userClub)
-        <div>
-            <x-input-label for="club" :value="__('Favorite Club')" />
-            <x-bladewind::select
-                :label="__('Favorite Club')"
-                name="club"
-                id="club"
-                :selected_value="old('userClub.club_id', $user->userClub?->club_id)"
-                searchable="true"
-                required="true"
-                label_key="title"
-                value_key="id"
-                :data="$clubs"
-            />
-            <x-input-error class="mt-2" :messages="$errors->get('club')" />
-        </div>
-        @else
-           Favorite Club: {{$user->userClub->club->title}}<br/>
-           Last change: {{$user->userClub->updated_at->format('Y-m-d H:m')}}
-        @endif
-
         <div class="flex items-center gap-4">
             <x-bladewind::button can_submit="true" size="small">{{ __('Save') }}</x-bladewind::button>
             @if (session('status') === 'profile-updated')

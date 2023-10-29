@@ -16,6 +16,9 @@ class UserClubFactory extends Factory
         return [
             'user_id' => 1,
             'club_id' => 1,
+            'opponent_club_id' => 2,
+            'update_club_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
+            'update_opponent_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
         ];

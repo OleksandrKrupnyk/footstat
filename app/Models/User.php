@@ -21,7 +21,9 @@ use Laravel\Sanctum\HasApiTokens;
  * Class User
  *
  *
- * @property UserClub $userClub
+ * @property UserClub|null $userClub
+ * @property Club|null $club
+ * @property Club|null $opponent
  * @property Mark[] $marks
  *
  * @package App\Models
@@ -90,15 +92,34 @@ class User extends Authenticatable implements FilamentUser
      */
     public function club():HasOneThrough
     {
-        return $this->hasOneThrough(
-            Club::class,
+        return $this->hasOneThrough( // Звідки
+            Club::class, // Куди
             UserClub::class,
             'user_id',
             'id',
-            'id',
+            'id', // Звідки.id
             'club_id',
         );
     }
+
+    /**
+     * Зв'язок з клубом
+     *
+     * @return HasOneThrough
+     */
+    public function opponent():HasOneThrough
+    {
+        return $this->hasOneThrough( // Звідки
+            Club::class, // Куди
+            UserClub::class,
+            'user_id',
+            'id',
+            'id', // Звідки.id
+            'opponent_club_id',
+        );
+    }
+
+
 
     public function mCount()
     {

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CriterionFactory extends Factory
 {
-    const Title = ['Оцінювання емблеми','Оцінювання тренера', 'Оцінювання власника'];
+    const Title = ['Evaluation of the emblem','Evaluation of the coach', 'Owner evaluation'];
     /**
      * Define the model's default state.
      *

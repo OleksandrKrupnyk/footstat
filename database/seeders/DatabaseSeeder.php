@@ -22,7 +22,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 
 class DatabaseSeeder extends Seeder
 {
-    protected $toTruncate = ['countries', 'scales', 'criteria', 'club_criteria', 'marks', 'clubs','user_clubs'];
+    protected $toTruncate = ['countries', 'scales', 'criteria', 'club_criteria', 'marks', 'clubs', 'user_clubs'];
 
     /**
      * Seed the application's database.
@@ -61,18 +61,21 @@ class DatabaseSeeder extends Seeder
         $userIds = $usersList->pluck('id');
 
         $this->command->warn(PHP_EOL . 'Creating UserClubs');
-        $this->withProgressBar(100,fn()=>
-            UserClub::factory()->count(1)
-                ->state(
-                    fn(array $attributes) => [
-                        'club_id' => $clubs->random(1)->first()->id,
+        $userClubsCollection = $this->withProgressBar(100, fn() => UserClub::factory()->count(1)
+            ->state(
+                function (array $attributes) use ($clubs, $userIds) {
+                    $clubIds = $clubs->random(2);
+                    return [
+                        'club_id' => $clubIds->first()->id,
+                        'update_club_at' => fake()->dateTimeBetween('-1 year', '-6 month'),
+//                        'opponent_club_id' => $clubIds->last()->id,
+//                        'update_opponent_at' => fake()->dateTimeBetween('-1 year', '-6 month'),
                         'user_id' => $userIds->shift(1),
-                    ]
-                )->create()
+                    ];
+                }
+            )->create()
         );
-
         $this->command->info('UserClubs created.');
-
         // Шкали
         $this->command->warn(PHP_EOL . 'Creating Scales');
         $scales = $this->withProgressBar(3, fn() => Scale::factory()->count(1)
@@ -119,19 +122,24 @@ class DatabaseSeeder extends Seeder
             ->create());
         $this->command->info('Criteria clubs created.');
 
-
         // Оцінки
         $this->command->warn(PHP_EOL . 'Creating MarkRecords');
+        $criteriaByClub = $clubCriterion->groupBy('club_id');
         $this->withProgressBar(1, fn() => Mark::factory()->count(
             fake()->numberBetween(100, $clubs->count() * 100))
-            ->state(function (array $attributes) use ($clubCriterion, $criteria, $scales, $usersList) {
+            ->state(function (array $attributes) use ($clubCriterion, $criteria, $scales, $userClubsCollection, $criteriaByClub) {
                 $record = $clubCriterion->random(1)->first();
+
                 $scale_id = $criteria->get($record->criterion_id)->scale_id;
+
                 $scale = $scales->get($scale_id);
+                $userClub = $userClubsCollection->random(1)->first();
+                $criteries = $criteriaByClub->get($userClub->club_id);
+                $critera = $criteries->random(1)->first();
                 return [
-                    'club_id' => $record->club_id,
-                    'club_criteria_id' => $record->id,
-                    'user_id' => $usersList->random(1)->first(),
+                    'user_id' => $userClub->user_id,
+                    'club_id' => $userClub->club_id,
+                    'club_criteria_id' => $critera->id,
                     'scale_type' => 'NUMBER',
                     'mark_value' => fake()->numberBetween(0, $scale->max_value - $scale->offset)
                 ];

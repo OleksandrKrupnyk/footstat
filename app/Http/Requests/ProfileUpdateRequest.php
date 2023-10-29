@@ -9,7 +9,9 @@ use Illuminate\Validation\Rule;
 /**
  * Class ProfileUpdateRequest
  *
- *
+ * @property string $name
+ * @property string $email
+
  * @package App\Http\Requests
  * @author Alex.Krupnik <krupnik_a@ukr.net>
  * @copyright (c), Thread
@@ -26,7 +28,6 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'club'=>['required']
         ];
     }
 }

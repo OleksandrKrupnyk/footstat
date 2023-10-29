@@ -22,8 +22,8 @@ class MarkFactory extends Factory
             'user_id' => 1,
             'scale_type' => 'NUMBER',
             'mark_value' => '0',
-            'created_at' => $this->faker->dateTimeBetween('-2 year', '+6 month'),
-            'updated_at' => $this->faker->dateTimeBetween('-2 year', '+6 month'),
+            'created_at' => $this->faker->dateTimeBetween('-1 year'),
+            'updated_at' => $this->faker->dateTimeBetween('-1 year'),
         ];
     }
 }

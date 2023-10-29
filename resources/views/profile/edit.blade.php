@@ -16,6 +16,9 @@
                         active="true"
                         label="Profile" />
                     <x-bladewind::tab-heading
+                        name="clubs"
+                        label="Clubs" />
+                    <x-bladewind::tab-heading
                         name="password"
                         label="Password" />
                     <x-bladewind::tab-heading
@@ -30,6 +33,13 @@
                             @include('profile.partials.update-profile-information-form')
                         </div>
                     </div>
+                    </x-bladewind::tab-content>
+                    <x-bladewind::tab-content name="clubs">
+                        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                            <div class="max-w-xl">
+                                @include('profile.partials.update-profile-club-form')
+                            </div>
+                        </div>
                     </x-bladewind::tab-content>
                     <x-bladewind::tab-content name="password">
                         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
