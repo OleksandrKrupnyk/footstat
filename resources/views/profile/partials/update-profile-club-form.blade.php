@@ -31,7 +31,7 @@
             </div>
         @else
             Favorite Club: {{$user->club->title}}<br/>
-            Last Favorite change: {{$user->userClub->update_club_at?->toDateTimeString()}}<br/>
+            Last Favorite change: {{$user?->userClub->update_club_at?->toDateTimeString()}}<br/>
         @endif
                 @if ($user->club)
                 <x-bladewind::input
@@ -46,7 +46,7 @@
                 :label="__('Opponent Club')"
                 name="opponent"
                 id="opponent"
-                :selected_value="old('userClub.opponent_club_id', $user->userClub?->opponent_club_id)"
+                :selected_value="old('userClub.opponent_club_id', $user?->userClub?->opponent_club_id)"
                 searchable="true"
                 required="true"
                 label_key="title"
@@ -54,7 +54,7 @@
                 :data="$clubs"
             />
             <x-input-error class="mt-2" :messages="$errors->get('opponent')"/>
-            Last Opponent change: {{$user->userClub->update_opponent_at?->format('Y-m-d H:i:s')}}<br/>
+            Last Opponent change: {{$user?->userClub?->update_opponent_at?->format('Y-m-d H:i:s')}}<br/>
 
         <div class="flex items-center gap-4">
             <x-bladewind::button can_submit="true" size="small">{{ __('Save') }}</x-bladewind::button>

@@ -1,5 +1,5 @@
 <?php
-    /** @var \Illuminate\Database\Eloquent\Collection $marks */
+/** @var \Illuminate\Database\Eloquent\Collection $marks */
 ?>
 <x-app-layout>
     <x-slot name="header">
@@ -18,33 +18,33 @@
                         <tr>
                             <th scope="col" class="px-6 py-4 text-center">Criteria</th>
                             <th scope="col" class="px-6 py-4 text-center">
-                                <x-bladewind::icon name="bars-arrow-down" class="inline h-16 w-16 text-red-500" />
+                                <x-bladewind::icon name="bars-arrow-down" class="inline h-16 w-16 text-red-500"/>
                                 <br/>Low Mark
                             </th>
                             <th scope="col" class="px-6 py-4 text-center">
-                                <x-bladewind::icon name="receipt-percent" class="inline h-16 w-16 text-amber-500" />
+                                <x-bladewind::icon name="receipt-percent" class="inline h-16 w-16 text-amber-500"/>
                                 <br/>Avg Mark
                             </th>
                             <th scope="col" class="px-6 py-4 text-center">
-                                <x-bladewind::icon name="bars-arrow-up" class="inline h-16 w-16 text-green-500" />
+                                <x-bladewind::icon name="bars-arrow-up" class="inline h-16 w-16 text-green-500"/>
                                 <br/>Hi Mark
                             </th>
                             <th scope="col" class="px-6 py-4 text-center">
-                                <x-bladewind::icon name="hashtag" class="inline h-16 w-16 text-amber-500" />
+                                <x-bladewind::icon name="hashtag" class="inline h-16 w-16 text-amber-500"/>
                                 <br/>Count
                             </th>
                             <th scope="col" class="px-6 py-4 text-center">
-                                <x-bladewind::icon name="trophy" class="inline h-16 w-16 text-blue-500" />
+                                <x-bladewind::icon name="trophy" class="inline h-16 w-16 text-blue-500"/>
                                 <br/>
                                 Max Scale
                             </th>
                             <th scope="col" class="px-6 py-4 text-center">
-                                <x-bladewind::icon name="hand-thumb-up" class="inline h-16 w-16 text-amber-500" />
+                                <x-bladewind::icon name="hand-thumb-up" class="inline h-16 w-16 text-amber-500"/>
                                 <br/>
                                 Last Mark
                             </th>
                             <th scope="col" class="px-6 py-4 text-center">
-                                <x-bladewind::icon name="calendar-days" class="inline h-16 w-16" />
+                                <x-bladewind::icon name="calendar-days" class="inline h-16 w-16"/>
                                 <br/>Last Vote
                             </th>
                             <th scope="col" class="px-6 py-4 text-center">
@@ -57,30 +57,23 @@
 
                             <tr class="border-b dark:border-neutral-500">
                                 <td class="px-6 py-4">
-{{--                                    {{$criteria->criterion->title}}<hr/>--}}
-                                    <x-bladewind::rating
+                                                                        {{$criteria->criterion->title}}<hr/>
+                                    <x-start-rating
+                                        id="read_{{$criteria->id}}"
                                         name="star-rating"
-                                        clickable="false"
-                                        :rating="number_format($comMarks[$criteria->id]->avg * 5/ $maxMarks[$criteria->id])"
-                                    /><hr/>
-                                    <x-bladewind::horizontal-line-graph
-                                        label=""
-                                        percentage = "50"
-                                        color = "red"
-                                        />
-                                    <x-bladewind::horizontal-line-graph
-                                        label="{{$criteria->criterion->title}}"
-                                        :percentage="number_format($comMarks[$criteria->id]->avg * 100/ $maxMarks[$criteria->id],2)"
-                                        color="orange" />
-
-
+                                        readonly="true"
+                                        size="normal"
+                                        :value="number_format($comMarks[$criteria->id]->avg * 5/ $maxMarks[$criteria->id])"
+                                    />
                                 </td>
                                 <td class="px-6 py-4 align-middle text-center">
                                     <span class="text-red-400 font-bold">{{$comMarks[$criteria->id]->low ??'0'}}</span>
                                 </td>
                                 <td class="px-6 py-4 align-middle text-center">
-                                    {{   number_format($comMarks[$criteria->id]->avg,2) ??'0'}}<hr/>
-                                    ({{  number_format($comMarks[$criteria->id]->avg * 100/ $maxMarks[$criteria->id],2) }}%)
+                                    {{   number_format($comMarks[$criteria->id]->avg,2) ??'0'}}
+                                    <hr/>
+                                    ({{  number_format($comMarks[$criteria->id]->avg * 100/ $maxMarks[$criteria->id],2) }}
+                                    %)
                                 </td>
                                 <td class="px-6 py-4 align-middle text-center">
                                     <span class="text-green-500 font-bold">
@@ -117,7 +110,6 @@
             </div>
         </div>
     </div>
-
     @foreach($criterions as $criteria)
         <x-bladewind::modal
             backdrop_can_close="false"
@@ -137,16 +129,13 @@
                 @csrf
                 <x-bladewind::input hidden="true" name="criteria_id" :value="$criteria->id"/>
                 <x-bladewind::input hidden="true" name="user_id" :value="$user->id"/>
-                <x-bladewind::input
-                    id="mark_value"
-                    required="true"
+                <x-start-rating
+                    id="mark_value{{$criteria->id}}"
+                    max-value="{{$criteria->criterion->scale->max_value}}"
                     name="mark_value"
-                    label="Mark"
-                    numeric="true"
-                    type="numeric"
-                    min="0"
-                    max="{{$criteria->criterion->scale->max_value}}"
+                    size="normal"
                 />
+
             </form>
         </x-bladewind::modal>
     @endforeach
@@ -154,8 +143,8 @@
         (function () {
         }(
             voteEmblem = function (formid) {
-                if (validateForm('#'+formid)) {
-                    domEl('#'+formid).submit();
+                if (validateForm('#' + formid)) {
+                    domEl('#' + formid).submit();
                 } else {
                     return false;
                 }
